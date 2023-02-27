@@ -1,7 +1,8 @@
 {
-  "name": "horizon-ui-tailwind-react",
+  "name": "horizon-tailwind-react",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://test.horizon-ui.com/horizon-tailwind-react",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
