@@ -10,7 +10,7 @@ const App = () => {
       <Route path="horizon-tailwind-react/admin/*" element={<AdminLayout />} />
       <Route
         path="horizon-tailwind-react/"
-        element={<Navigate to="/admin" replace />}
+        element={<Navigate to="/horizon-tailwind-react/admin" replace />}
       />
     </Routes>
   );
