@@ -6,8 +6,8 @@ import AuthLayout from "layouts/auth";
 const App = () => {
   return (
     <Routes>
-      <Route path="auth/*" element={<AuthLayout />} />
-      <Route path="admin/*" element={<AdminLayout />} />
+      <Route path="/auth/*" element={<AuthLayout />} />
+      <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/" element={<Navigate to="/admin" replace />} />
     </Routes>
   );
