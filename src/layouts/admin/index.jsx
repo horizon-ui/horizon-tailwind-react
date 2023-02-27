@@ -80,7 +80,12 @@ export default function Admin(props) {
 
                 <Route
                   path="/"
-                  element={<Navigate to="/admin/default" replace />}
+                  element={
+                    <Navigate
+                      to="/horizon-tailwind-react/admin/default"
+                      replace
+                    />
+                  }
                 />
               </Routes>
             </div>
