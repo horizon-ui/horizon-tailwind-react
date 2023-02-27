@@ -6,9 +6,12 @@ import AuthLayout from "layouts/auth";
 const App = () => {
   return (
     <Routes>
-      <Route path="/auth/*" element={<AuthLayout />} />
-      <Route path="/admin/*" element={<AdminLayout />} />
-      <Route path="/" element={<Navigate to="/admin" replace />} />
+      <Route path="horizon-tailwind-react/auth/*" element={<AuthLayout />} />
+      <Route path="horizon-tailwind-react/admin/*" element={<AdminLayout />} />
+      <Route
+        path="horizon-tailwind-react/"
+        element={<Navigate to="/admin" replace />}
+      />
     </Routes>
   );
 };
