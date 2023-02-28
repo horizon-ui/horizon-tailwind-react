@@ -15,14 +15,14 @@ import { MdHome, MdOutlineShoppingCart, MdBarChart, MdPerson, MdLock } from "rea
 const routes = [
   {
     name: "Main Dashboard",
-    layout: "/horizon-tailwind-react/admin",
+    layout: "/admin",
     path: "default",
     icon: <MdHome className="w-6 h-6" />,
     component: <MainDashboard />,
   },
   {
     name: "NFT Marketplace",
-    layout: "/horizon-tailwind-react/admin",
+    layout: "/admin",
     path: "nft-marketplace",
     icon: <MdOutlineShoppingCart className="w-6 h-6" />,
     component: <NFTMarketplace />,
@@ -30,21 +30,21 @@ const routes = [
   },
   {
     name: "Data Tables",
-    layout: "/horizon-tailwind-react/admin",
+    layout: "/admin",
     icon: <MdBarChart className="w-6 h-6" />,
     path: "data-tables",
     component: <DataTables />,
   },
   {
     name: "Profile",
-    layout: "/horizon-tailwind-react/admin",
+    layout: "/admin",
     path: "profile",
     icon: <MdPerson className="w-6 h-6" />,
     component: <Profile />,
   },
   {
     name: "Sign In",
-    layout: "/horizon-tailwind-react/auth",
+    layout: "/auth",
     path: "sign-in",
     icon: <MdLock className="w-6 h-6" />,
     component: <SignIn />,
