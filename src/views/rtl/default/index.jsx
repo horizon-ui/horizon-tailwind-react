@@ -8,11 +8,11 @@ import { MdBarChart, MdDashboard } from "react-icons/md";
 
 import { columnsDataCheck, columnsDataComplex } from "./variables/columnsData";
 
-import Widget from "components/widget/Widget";
-import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
-import TaskCard from "views/admin/default/components/TaskCard";
+import Widget from "views/rtl/default/components/Widget";
+import CheckTable from "views/rtl/default/components/CheckTable";
+import ComplexTable from "views/rtl/default/components/ComplexTable";
+import DailyTraffic from "views/rtl/default/components/DailyTraffic";
+import TaskCard from "views/rtl/default/components/TaskCard";
 import tableDataCheck from "./variables/tableDataCheck.json";
 import tableDataComplex from "./variables/tableDataComplex.json";
 
