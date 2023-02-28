@@ -1,9 +1,9 @@
 /* eslint-disable */
 
 import { HiX } from "react-icons/hi";
-import Links from "./componentsrtl/Links";
+import Links from "./components/Links";
 
-import SidebarCard from "components/sidebar/componentsrtl/SidebarCard";
+import SidebarCard from "components/sidebar/components/SidebarCard";
 import routes from "routes.js";
 
 const Sidebar = ({ open, onClose }) => {
@@ -14,14 +14,14 @@ const Sidebar = ({ open, onClose }) => {
       }`}
     >
       <span
-        className="absolute top-4 right-4 block cursor-pointer xl:hidden"
+        className="absolute top-4 block cursor-pointer end-4 xl:hidden"
         onClick={onClose}
       >
         <HiX />
       </span>
 
       <div className={`mx-[56px] mt-[50px] flex items-center`}>
-        <div className="mt-1 ml-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
+        <div className="mt-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 ms-1 dark:text-white">
           Horizon <span class="font-medium">FREE</span>
         </div>
       </div>
