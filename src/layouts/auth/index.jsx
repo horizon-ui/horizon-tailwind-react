@@ -16,6 +16,7 @@ export default function Auth() {
       }
     });
   };
+  document.documentElement.dir = "ltr";
   return (
     <div>
       <div className="relative float-right h-full min-h-screen w-full !bg-white dark:!bg-navy-900">
