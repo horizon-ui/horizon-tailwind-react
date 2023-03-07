@@ -23,10 +23,7 @@ export function SidebarLinks(props) {
         route.layout === "/rtl"
       ) {
         return (
-          <Link
-            key={index}
-            to={"/horizon-tailwind-react" + route.layout + "/" + route.path}
-          >
+          <Link key={index} to={route.layout + "/" + route.path}>
             <div className="relative mb-3 flex hover:cursor-pointer">
               <li
                 className="my-[3px] flex cursor-pointer items-center px-8"
