@@ -96,7 +96,7 @@ export const barChartOptionsDailyTraffic = {
   },
   plotOptions: {
     bar: {
-      borderRadius: 5,
+      borderRadius: 10,
       columnWidth: "40px",
     },
   },
