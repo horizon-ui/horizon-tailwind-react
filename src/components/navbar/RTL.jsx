@@ -71,7 +71,7 @@ const Navbar = (props) => {
               <IoMdNotificationsOutline className="h-4 w-4 text-gray-600 dark:text-white" />
             </p>
           }
-          animation="origin-[65%_0%] md:origin-top-start transition-all duration-300 ease-in-out"
+          animation="origin-[65%_0%] md:origin-top-end transition-all duration-300 ease-in-out"
           children={
             <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-white p-4 shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:text-white dark:shadow-none sm:w-[460px]">
               <div className="flex items-center justify-between">
@@ -112,7 +112,7 @@ const Navbar = (props) => {
               </button>
             </div>
           }
-          classNames={"py-2 top-4 -start-[230px] md:-start-[440px] w-max"}
+          classNames={"py-2 top-4 left-0 -start-[230px] md:-start-[440px] w-max"}
         />
         {/* start Horizon PRO */}
         <Dropdown
@@ -154,8 +154,8 @@ const Navbar = (props) => {
               </a>
             </div>
           }
-          classNames={"py-2 top-6 -start-[250px] md:-start-[330px] w-max"}
-          animation="origin-[75%_0%] md:origin-top-start transition-all duration-300 ease-in-out"
+          classNames={"py-2 top-6 left-0 -start-[250px] md:-start-[330px] w-max"}
+          animation="origin-[75%_0%] md:origin-top-end transition-all duration-300 ease-in-out"
         />
         <div
           className="cursor-pointer text-gray-600"
@@ -217,7 +217,8 @@ const Navbar = (props) => {
               </div>
             </div>
           }
-          classNames={"py-2 top-8 -start-[180px] w-max"}
+          classNames={"py-2 top-8 left-0 -start-[180px] w-max"}
+          animation="origin-[75%_0%] md:origin-top-end transition-all duration-300 ease-in-out"
         />
       </div>
     </nav>
