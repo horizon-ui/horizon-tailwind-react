@@ -49,7 +49,7 @@ const Navbar = (props) => {
 
       <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2">
         <div className="flex h-full items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
-          <p className="ps-3 pe-2 text-xl">
+          <p className="text-xl pe-2 ps-3">
             <FiSearch className="h-4 w-4 text-gray-400 dark:text-white" />
           </p>
           <input
@@ -87,11 +87,11 @@ const Navbar = (props) => {
                 <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
                   <BsArrowBarUp />
                 </div>
-                <div className="ms-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
-                  <p className="mb-1 text-start text-base font-bold text-gray-900 dark:text-white">
+                <div className="flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm ms-2">
+                  <p className="mb-1 text-base font-bold text-gray-900 text-start dark:text-white">
                     New Update: Horizon UI Dashboard PRO
                   </p>
-                  <p className="font-base text-start text-xs text-gray-900 dark:text-white">
+                  <p className="font-base text-xs text-gray-900 text-start dark:text-white">
                     A new update for your downloaded item is available!
                   </p>
                 </div>
@@ -101,11 +101,11 @@ const Navbar = (props) => {
                 <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
                   <BsArrowBarUp />
                 </div>
-                <div className="ms-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
-                  <p className="mb-1 text-start text-base font-bold text-gray-900 dark:text-white">
+                <div className="flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm ms-2">
+                  <p className="mb-1 text-base font-bold text-gray-900 text-start dark:text-white">
                     New Update: Horizon UI Dashboard PRO
                   </p>
-                  <p className="font-base text-start text-xs text-gray-900 dark:text-white">
+                  <p className="font-base text-xs text-gray-900 text-start dark:text-white">
                     A new update for your downloaded item is available!
                   </p>
                 </div>
@@ -185,17 +185,17 @@ const Navbar = (props) => {
             />
           }
           children={
-            <div className="flex h-48 w-56 flex-col justify-start rounded-[20px] bg-white bg-cover bg-no-repeat shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:text-white dark:shadow-none">
-              <div className="ms-4 mt-3">
+            <div className="flex w-56 flex-col justify-start rounded-[20px] bg-white bg-cover bg-no-repeat shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:text-white dark:shadow-none">
+              <div className="p-4">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-navy-700 dark:text-white">
                     👋 Hey, Adela
                   </p>{" "}
                 </div>
               </div>
-              <div className="mt-3 h-px w-full bg-gray-200 dark:bg-white/20 " />
+              <div className="h-px w-full bg-gray-200 dark:bg-white/20 " />
 
-              <div className="ms-4 mt-3 flex flex-col">
+              <div className="flex flex-col p-4">
                 <a
                   href=" "
                   className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
