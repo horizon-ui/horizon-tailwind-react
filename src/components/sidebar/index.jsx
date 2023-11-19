@@ -5,11 +5,33 @@ import Links from "./componentsrtl/Links";
 
 import SidebarCard from "components/sidebar/componentsrtl/SidebarCard";
 import routes from "routes.js";
+import { useState, useEffect } from "react";
 
 const Sidebar = ({ open, onClose }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  const changeNavbar = () => {
+    if (window.scrollY > 1) {
+      console.log(`${90 - window.scrollY}px`);
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", changeNavbar);
+
+    return () => {
+      window.removeEventListener("scroll", changeNavbar);
+    };
+  });
   return (
     <div
-      className={`sm:none duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${
+      className={`sm:none duration-175 linear fixed !z-50 ${
+        scrolled ? "" : "mt-[90px]"
+      } flex ${
+        scrolled ? "min-h-full" : "min-h-[calc(100%_-_90px)]"
+      } flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${
         open ? "translate-x-0" : "-translate-x-96"
       }`}
     >

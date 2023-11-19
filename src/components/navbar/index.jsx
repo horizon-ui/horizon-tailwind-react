@@ -11,13 +11,35 @@ import {
   IoMdInformationCircleOutline,
 } from "react-icons/io";
 import avatar from "assets/img/avatars/avatar4.png";
+import { useState, useEffect } from "react";
 
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const changeNavbar = () => {
+    if (window.scrollY > 1) {
+      console.log(`${90 - window.scrollY}px`);
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", changeNavbar);
+
+    return () => {
+      window.removeEventListener("scroll", changeNavbar);
+    };
+  });
 
   return (
-    <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
+    <nav
+      className={`sticky ${
+        scrolled ? "top-4" : "top-[90px]"
+      } z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl duration-[0.2s] dark:bg-[#0b14374d]`}
+    >
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
           <a
