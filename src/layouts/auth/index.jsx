@@ -2,9 +2,19 @@ import Footer from "components/footer/FooterAuthDefault";
 import authImg from "assets/img/auth/auth.png";
 import { Link, Routes, Route, Navigate } from "react-router-dom";
 import routes from "routes.js";
-import FixedPlugin from "components/fixedPlugin/FixedPlugin";
+import React, {  useContext } from 'react';
+
+
+// Contexts
+import { AuthContext } from 'contexts/AuthContext';
+
 
 export default function Auth() {
+
+  const { isSignedIn } = useContext(AuthContext);
+
+
+  // functions for changing the states from components
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
@@ -17,10 +27,12 @@ export default function Auth() {
     });
   };
   document.documentElement.dir = "ltr";
+
+  if (isSignedIn) return <Navigate to="/admin" />;
   return (
     <div>
       <div className="relative float-right h-full min-h-screen w-full !bg-white dark:!bg-navy-900">
-        <FixedPlugin />
+
         <main className={`mx-auto min-h-screen`}>
           <div className="relative flex">
             <div className="mx-auto flex min-h-full w-full flex-col justify-start pt-12 md:max-w-[75%] lg:h-screen lg:max-w-[1013px] lg:px-8 lg:pt-0 xl:h-[100vh] xl:max-w-[1383px] xl:px-0 xl:pl-[70px]">

@@ -6,6 +6,7 @@ import navbarimage from "assets/img/layout/Navbar.png";
 import { BsArrowBarUp } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
+import { AuthContext } from 'contexts/AuthContext';
 import {
   IoMdNotificationsOutline,
   IoMdInformationCircleOutline,
@@ -13,6 +14,7 @@ import {
 import avatar from "assets/img/avatars/avatar4.png";
 
 const Navbar = (props) => {
+  const { signOut } = React.useContext(AuthContext);
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
 
@@ -208,7 +210,7 @@ const Navbar = (props) => {
                 >
                   Newsletter Settings
                 </a>
-                <a
+                <a onClick={signOut}
                   href=" "
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500 transition duration-150 ease-out hover:ease-in"
                 >
