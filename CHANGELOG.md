@@ -1,4 +1,10 @@
-## [1.0.1] 2022-03-07
+## [1.1.0] 2024-07-26
+
+🚀 New features:
+
+- React tables updated to Tanstack V8
+
+## [1.0.1] 2023-03-07
 
 🐛 Bugs solved:
 

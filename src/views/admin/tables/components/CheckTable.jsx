@@ -1,44 +1,92 @@
-import React, { useMemo } from "react";
+import React from "react";
 import CardMenu from "components/card/CardMenu";
-import Card from "components/card";
 import Checkbox from "components/checkbox";
+import Card from "components/card";
 
 import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
-const CheckTable = (props) => {
-  const { columnsData, tableData } = props;
-
-  const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]);
-
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
+function CheckTable(props) {
+  const { tableData } = props;
+  const [sorting, setSorting] = React.useState([]);
+  let defaultData = tableData;
+  const columns = [
+    columnHelper.accessor("name", {
+      id: "name",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">NAME</p>
+      ),
+      cell: (info) => (
+        <div className="flex items-center">
+          <Checkbox
+            defaultChecked={info.getValue()[1]}
+            colorScheme="brandScheme"
+            me="10px"
+          />
+          <p className="ml-3 text-sm font-bold text-navy-700 dark:text-white">
+            {info.getValue()[0]}
+          </p>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("progress", {
+      id: "progress",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">
+          PROGRESS
+        </p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("quantity", {
+      id: "quantity",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">
+          QUANTITY
+        </p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("date", {
+      id: "date",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">DATE</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+  ]; // eslint-disable-next-line
+  const [data, setData] = React.useState(() => [...defaultData]);
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
     },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    initialState,
-  } = tableInstance;
-  initialState.pageSize = 11;
-
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    debugTable: true,
+  });
   return (
-    <Card extra={"w-full sm:overflow-auto p-4"}>
-      <header className="relative flex items-center justify-between">
+    <Card extra={"w-full h-full sm:overflow-auto px-6"}>
+      <header className="relative flex items-center justify-between pt-4">
         <div className="text-xl font-bold text-navy-700 dark:text-white">
           Check Table
         </div>
@@ -47,86 +95,63 @@ const CheckTable = (props) => {
       </header>
 
       <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
-        <table
-          {...getTableProps()}
-          className="w-full"
-          variant="simple"
-          color="gray-500"
-          mb="24px"
-        >
+        <table className="w-full">
           <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, index) => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="border-b border-gray-200 pr-16 pb-[10px] text-start dark:!border-navy-700"
-                    key={index}
-                  >
-                    <div className="text-xs font-bold tracking-wide text-gray-600 lg:text-xs">
-                      {column.render("Header")}
-                    </div>
-                  </th>
-                ))}
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id} className="!border-px !border-gray-400">
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <th
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      onClick={header.column.getToggleSortingHandler()}
+                      className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
+                    >
+                      <div className="items-center justify-between text-xs text-gray-200">
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{
+                          asc: "",
+                          desc: "",
+                        }[header.column.getIsSorted()] ?? null}
+                      </div>
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, index) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={index}>
-                  {row.cells.map((cell, index) => {
-                    let data = "";
-                    if (cell.column.Header === "NAME") {
-                      data = (
-                        <div className="flex items-center gap-2">
-                          <Checkbox />
-                          <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {cell.value[0]}
-                          </p>
-                        </div>
+          <tbody>
+            {table
+              .getRowModel()
+              .rows.slice(0, 5)
+              .map((row) => {
+                return (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <td
+                          key={cell.id}
+                          className="min-w-[150px] border-white/0 py-3  pr-4"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
                       );
-                    } else if (cell.column.Header === "PROGRESS") {
-                      data = (
-                        <div className="flex items-center">
-                          <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {cell.value}%
-                          </p>
-                        </div>
-                      );
-                    } else if (cell.column.Header === "QUANTITY") {
-                      data = (
-                        <p className="text-sm font-bold text-navy-700 dark:text-white">
-                          {" "}
-                          {cell.value}{" "}
-                        </p>
-                      );
-                    } else if (cell.column.Header === "DATE") {
-                      data = (
-                        <p className="text-sm font-bold text-navy-700 dark:text-white">
-                          {cell.value}
-                        </p>
-                      );
-                    }
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        key={index}
-                        className="pt-[14px] pb-[16px] sm:text-[14px]"
-                      >
-                        {data}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+                    })}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
     </Card>
   );
-};
+}
 
 export default CheckTable;
+const columnHelper = createColumnHelper();

@@ -1,6 +1,6 @@
 {
   "name": "horizon-ui-tailwind-react",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@chakra-ui/hooks": "^2.1.4",
@@ -11,6 +11,7 @@
     "@chakra-ui/tooltip": "^2.2.6",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@tanstack/react-table": "^8.7.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",

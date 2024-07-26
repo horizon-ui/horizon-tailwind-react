@@ -1,125 +1,159 @@
+import React from "react";
 import CardMenu from "components/card/CardMenu";
 import Card from "components/card";
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
-import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
-import { useMemo } from "react";
 import Progress from "components/progress";
-const ComplexTable = (props) => {
-  const { columnsData, tableData } = props;
+import { MdCancel, MdCheckCircle, MdOutlineError } from "react-icons/md";
 
-  const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]);
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
+const columnHelper = createColumnHelper();
+
+// const columns = columnsDataCheck;
+export default function ComplexTable(props) {
+  const { tableData } = props;
+  const [sorting, setSorting] = React.useState([]);
+  let defaultData = tableData;
+  const columns = [
+    columnHelper.accessor("name", {
+      id: "name",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">NAME</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("status", {
+      id: "status",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">
+          STATUS
+        </p>
+      ),
+      cell: (info) => (
+        <div className="flex items-center">
+          {info.getValue() === "Approved" ? (
+            <MdCheckCircle className="text-green-500 me-1 dark:text-green-300" />
+          ) : info.getValue() === "Disable" ? (
+            <MdCancel className="text-red-500 me-1 dark:text-red-300" />
+          ) : info.getValue() === "Error" ? (
+            <MdOutlineError className="text-amber-500 me-1 dark:text-amber-300" />
+          ) : null}
+          <p className="text-sm font-bold text-navy-700 dark:text-white">
+            {info.getValue()}
+          </p>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("date", {
+      id: "date",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">DATE</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("progress", {
+      id: "progress",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">
+          PROGRESS
+        </p>
+      ),
+      cell: (info) => (
+        <div className="flex items-center">
+          <Progress width="w-[108px]" value={info.getValue()} />
+        </div>
+      ),
+    }),
+  ]; // eslint-disable-next-line
+  const [data, setData] = React.useState(() => [...defaultData]);
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
     },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    initialState,
-  } = tableInstance;
-  initialState.pageSize = 5;
-
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    debugTable: true,
+  });
   return (
     <Card extra={"w-full h-full px-6 pb-6 sm:overflow-x-auto"}>
-      <div class="relative flex items-center justify-between pt-4">
-        <div class="text-xl font-bold text-navy-700 dark:text-white">
+      <div className="relative flex items-center justify-between pt-4">
+        <div className="text-xl font-bold text-navy-700 dark:text-white">
           Complex Table
         </div>
         <CardMenu />
       </div>
 
-      <div class="mt-8 overflow-x-scroll xl:overflow-hidden">
-        <table {...getTableProps()} className="w-full">
+      <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
+        <table className="w-full">
           <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, index) => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    key={index}
-                    className="border-b border-gray-200 pb-[10px] text-start pe-28 dark:!border-navy-700"
-                  >
-                    <p className="text-xs tracking-wide text-gray-600">
-                      {column.render("Header")}
-                    </p>
-                  </th>
-                ))}
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id} className="!border-px !border-gray-400">
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <th
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      onClick={header.column.getToggleSortingHandler()}
+                      className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
+                    >
+                      <div className="items-center justify-between text-xs text-gray-200">
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{
+                          asc: "",
+                          desc: "",
+                        }[header.column.getIsSorted()] ?? null}
+                      </div>
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, index) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={index}>
-                  {row.cells.map((cell, index) => {
-                    let data = "";
-                    if (cell.column.Header === "NAME") {
-                      data = (
-                        <p className="text-sm font-bold text-navy-700 dark:text-white">
-                          {cell.value}
-                        </p>
+          <tbody>
+            {table
+              .getRowModel()
+              .rows.slice(0, 5)
+              .map((row) => {
+                return (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <td
+                          key={cell.id}
+                          className="min-w-[150px] border-white/0 py-3  pr-4"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
                       );
-                    } else if (cell.column.Header === "STATUS") {
-                      data = (
-                        <div className="flex items-center gap-2">
-                          <div className={`rounded-full text-xl`}>
-                            {cell.value === "Approved" ? (
-                              <MdCheckCircle className="text-green-500" />
-                            ) : cell.value === "Disable" ? (
-                              <MdCancel className="text-red-500" />
-                            ) : cell.value === "Error" ? (
-                              <MdOutlineError className="text-orange-500" />
-                            ) : null}
-                          </div>
-                          <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {cell.value}
-                          </p>
-                        </div>
-                      );
-                    } else if (cell.column.Header === "DATE") {
-                      data = (
-                        <p className="text-sm font-bold text-navy-700 dark:text-white">
-                          {cell.value}
-                        </p>
-                      );
-                    } else if (cell.column.Header === "PROGRESS") {
-                      data = <Progress width="w-[108px]" value={cell.value} />;
-                    }
-                    return (
-                      <td
-                        className="pt-[14px] pb-[18px] sm:text-[14px]"
-                        {...cell.getCellProps()}
-                        key={index}
-                      >
-                        {data}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+                    })}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
     </Card>
   );
-};
-
-export default ComplexTable;
+}
